@@ -11,69 +11,73 @@ Currently the following samples are available on the image for trial:
 
 To use ansible with zOS, Python and Z Open Automation Utilities need to be installed on the LPAR
 
+## Getting Started
+
+You can build the container from this repo or taking from docker hub `docker run -it billpereira/demo_ansible:latest`
+
 ### Ping
 
 ```
-ansible-playbook ping.yml -i tvt5106.yml
+ansible-playbook ping.yml -i yourhost.yml
 
 PLAY [zsystem] *******************************************************************************************************************************************************************
 
-TASK [Pinging host - tvt5106.svl.ibm.com] ****************************************************************************************************************************************
-ok: [tvt5106.svl.ibm.com]
+TASK [Pinging host - yourhost.com] ****************************************************************************************************************************************
+ok: [yourhost.com]
 
 PLAY RECAP ***********************************************************************************************************************************************************************
-tvt5106.svl.ibm.com        : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 
+yourhost.com        : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 
 ```
 
 ### Submit a job
 
 ```
-ansible-playbook submit-job.yml -i tvt5106.yml
+ansible-playbook submit-job.yml -i yourhost.yml
 
 PLAY [all] ***********************************************************************************************************************************************************************
 
 TASK [Submit a IEFBR14] **********************************************************************************************************************************************************
-changed: [tvt5106.svl.ibm.com]
+changed: [yourhost.com]
 
 TASK [Setting fact `Job Results`] ************************************************************************************************************************************************
-ok: [tvt5106.svl.ibm.com]
+ok: [yourhost.com]
 
 TASK [Results] *******************************************************************************************************************************************************************
-ok: [tvt5106.svl.ibm.com] => {
+ok: [yourhost.com] => {
     "msg": "Job JOB03587 completed with CC 0000"
 }
 
 PLAY RECAP ***********************************************************************************************************************************************************************
-tvt5106.svl.ibm.com        : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+yourhost.com        : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
 
 ### Send a command
 
 ```
-ansible-playbook send-command.yml -i tvt5106.yml
+ansible-playbook send-command.yml -i yourhost.yml
 
 PLAY [zsystem] *******************************************************************************************************************************************************************
 
 TASK [Detecting system name] *****************************************************************************************************************************************************
-changed: [tvt5106.svl.ibm.com]
+changed: [yourhost.com]
 
 TASK [Setting fact `system_name`] ************************************************************************************************************************************************
-ok: [tvt5106.svl.ibm.com]
+ok: [yourhost.com]
 
 TASK [Fact `system_name` set with value] *****************************************************************************************************************************************
-ok: [tvt5106.svl.ibm.com] => {
-    "msg": "TVT5106"
+ok: [yourhost.com] => {
+    "msg": "yourhost"
 }
 
-TASK [Checking active tasks for TVT5106] *****************************************************************************************************************************************
-changed: [tvt5106.svl.ibm.com]
+TASK [Checking active tasks for yourhost] *****************************************************************************************************************************************
+changed: [yourhost.com]
 
 TASK [Fact `system_name` set with value] *****************************************************************************************************************************************
-ok: [tvt5106.svl.ibm.com] => {
+ok: [yourhost.com] => {
     "msg": [
-        "TVT5106   2020172  23:13:41.87             ISF031I CONSOLE BILL ACTIVATED",
-        "TVT5106   2020172  23:13:41.87            -D A,IZU*",
-        "TVT5106   2020172  23:13:41.87             CNZ4106I 23.13.41 DISPLAY ACTIVITY 112",
+        "yourhost   2020172  23:13:41.87             ISF031I CONSOLE BILL ACTIVATED",
+        "yourhost   2020172  23:13:41.87            -D A,IZU*",
+        "yourhost   2020172  23:13:41.87             CNZ4106I 23.13.41 DISPLAY ACTIVITY 112",
         "                                            JOBS     M/S    TS USERS    SYSAS    INITS   ACTIVE/MAX VTAM     OAS",
         "                                           00028    00022    00001      00031    00037    00001/00300       00046",
         "                                            IZUANG1  IZUANG1  STEP1    OWT  SO  A=0040   PER=NO   SMC=000",
@@ -94,5 +98,5 @@ ok: [tvt5106.svl.ibm.com] => {
 }
 
 PLAY RECAP ***********************************************************************************************************************************************************************
-tvt5106.svl.ibm.com        : ok=5    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+yourhost.com        : ok=5    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 ```
