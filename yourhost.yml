@@ -1,0 +1,11 @@
+# Reference for iventory
+# https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html
+zsystem:
+  hosts:
+    your.host.address:
+      ansible_port: 22                                # SSH Port
+      ansible_user: yourid                            # USER used for deploy
+      ansible_password: yourpwd                       # USER used for deploy
+      ansible_ssh_pipelining: true                    # needed for encoding on ssh connections
+      zoau_home: /var/zoau/zoau-1.0.1                 # Path for your ZOAU directory
+      python_path: /usr/lpp/rocket/python36/python36  # Path for your Python

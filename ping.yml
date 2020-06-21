@@ -1,0 +1,28 @@
+###############################################################################
+# This playbook will demonstrate how to use Ansible to ping a target. Although
+# this can be copied and run, it is reccommended you clone this repository.
+# 
+# Dependencies:
+#   python
+#   ansible
+# 
+# Usage: 
+#  ansible-playbook -i <hostname>, <playbook>
+#  ansible-playbook -i <hostname>, <playbook> -k
+# 
+#  Note: -k will prompt for a connection password  
+# Example: 
+#  ansible-playbook -i EC33017A.vmec.svl.ibm.com, ping.yaml
+###############################################################################
+
+---
+  - hosts: zsystem
+    vars:
+        ansible_python_interpreter: "{{python_path}}/bin/python"
+    gather_facts: no
+    
+    environment:
+      LIBPATH: "{{python_path}}/lib:/lib:/usr/lib:."
+    tasks: 
+      - name: Pinging host - {{ inventory_hostname }}
+        ping:

@@ -1,0 +1,59 @@
+###############################################################################
+# This playbook will demonstrate how to use Ansible to ping a target. Although
+# this can be copied and run, it is reccommended you clone this repository.
+# 
+# Dependencies:
+#   python
+#   ansible
+#   zoau
+# Usage: 
+#  ansible-playbook -i <hostname>, <playbook>
+#  ansible-playbook -i <hostname>, <playbook> -k
+# 
+#  Note: -k will prompt for a connection password  
+# Example: 
+#  ansible-playbook -i EC33017A.vmec.svl.ibm.com, ping.yaml
+###############################################################################
+---
+  - hosts: zsystem
+    gather_facts: no
+    vars:
+      ansible_python_interpreter: "{{python_path}}/bin/python"
+      _TAG_REDIR_ERR: txt
+      _TAG_REDIR_IN: txt
+      _TAG_REDIR_OUT: txt
+      tgt_tmp_dir: "/tmp"
+      ctl_tmp_dir: "/tmp"
+    environment:
+      ZOAU_ROOT: "{{zoau_home}}"    
+      # ZOAU_HOME: "{{zoau_home}}" 
+      PATH: "{{zoau_home}}/bin:{{python_path}}/bin/python:/bin:."
+      LIBPATH: "{{zoau_home}}/lib:{{python_path}}/lib:/lib:/usr/lib:."
+      PYTHONPATH: "{{zoau_home}}/lib"
+      _BPXK_AUTOCVT: "ON"
+    connection: ibm.ibm_zos_core.zos_ssh
+        
+    collections:
+      - ibm.ibm_zos_core
+      
+    tasks:
+      - name: Detecting system name
+        #shell: "uname -a |awk '{print $2}'"
+        command: uname -n
+        register: result
+
+      - name: Setting fact `system_name`
+        set_fact:
+          system_name: "{{ result.stdout}}"
+      
+      - name: Fact `system_name` set with value
+        debug:
+          msg: "{{ system_name }}"
+
+      - name: Checking if the task is up {{ system_name }}
+        zos_operator:
+          cmd: "D A,IZUSVR1"
+          debug: true
+        register: result_zos_operator
+
+      
