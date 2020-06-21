@@ -9,10 +9,9 @@ RUN ansible-galaxy collection install ibm.ibm_zos_core:==1.1.0-beta1
 # RUN ansible-galaxy collection install ibm.ibm_zos_core
 WORKDIR /root
 COPY ansible.cfg .
-COPY hosts.yml .
-COPY tvt5106.yml .
+COPY yourhost.yml .
 COPY ping.yml .
 COPY submit-job.yml .
-COPY proc-update.yml .
+COPY send-command.yml .
 RUN service sshd restart
 ENTRYPOINT /bin/bash 

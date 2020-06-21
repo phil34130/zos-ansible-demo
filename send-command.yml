@@ -49,11 +49,15 @@
       - name: Fact `system_name` set with value
         debug:
           msg: "{{ system_name }}"
-
-      - name: Checking if the task is up {{ system_name }}
+          
+      - name: Checking active tasks for {{ system_name }}
         zos_operator:
-          cmd: "D A,IZUSVR1"
+          cmd: "D A,IZU*"
           debug: true
         register: result_zos_operator
-
+      
+      - name: Fact `system_name` set with value
+        debug:
+          msg: "{{ result_zos_operator.content }}"
+        
       
